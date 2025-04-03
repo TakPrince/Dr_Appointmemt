@@ -1,16 +1,16 @@
 import jwt from "jsonwebtoken";
 
 // admin authentication middleware
-const authAdmin = async (req, res, next) => {
+const authUser = async (req, res, next) => {
   try {
-    const { atoken } = req.headers;
-    if (!atoken) {
+    const { token } = req.headers;
+    if (!token) {
       return res.json({
         success: false,
         msg: " authorization denied",
       });
     }
-    const token_decord = jwt.verify(atoken, process.env.JWT_Secret);
+    const token_decord = jwt.verify(token, process.env.JWT_Secret);
 
     if (token_decord !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
       return res.json({
@@ -25,4 +25,4 @@ const authAdmin = async (req, res, next) => {
   }
 };
 
-export default authAdmin;
+export default authUser;
