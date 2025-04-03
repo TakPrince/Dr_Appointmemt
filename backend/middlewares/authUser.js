@@ -1,27 +1,26 @@
 import jwt from "jsonwebtoken";
 
-// admin authentication middleware
 const authUser = async (req, res, next) => {
   try {
-    const { token } = req.headers;
-    if (!token) {
-      return res.json({
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
         success: false,
-        msg: " authorization denied",
+        message: "Authorization denied - no token provided",
       });
     }
-    const token_decord = jwt.verify(token, process.env.JWT_Secret);
 
-    if (token_decord !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
-      return res.json({
-        success: false,
-        msg: " authorization denied",
-      });
-    }
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = { id: decoded.id };
     next();
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, meassage: error.meassage });
+    console.error("Authentication error:", error);
+    res.status(401).json({
+      success: false,
+      message: "Invalid or expired token",
+    });
   }
 };
 
