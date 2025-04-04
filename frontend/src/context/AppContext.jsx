@@ -80,7 +80,7 @@ const AppProvider = ({ children }) => {
 
     return (
         <AppContext.Provider value={{
-            doctors,
+            doctors, getDoctorsData,
             userData,
             token,
             setToken,

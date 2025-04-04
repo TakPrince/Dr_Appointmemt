@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import doctorModel from "../models/doctorModel.js";
+import appointementModel from "../models/appointementModel.js";
 
 // Register User
 const registerUser = async (req, res) => {
@@ -210,4 +212,76 @@ const updateProfile = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile };
+// api to book appointment
+
+const bookAppointment = async (req, res) => {
+  try {
+    const { docId, slotDate, slotTime } = req.body;
+    const userId = req.user.id; // Get userId from authenticated user
+
+    const docData = await doctorModel.findById(docId).select("-password");
+
+    if (!docData || !docData.available) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not available",
+      });
+    }
+
+    let slot_booked = docData.slots_booked;
+
+    // Check for slot availability
+    if (slot_booked[slotDate] && slot_booked[slotDate].includes(slotTime)) {
+      return res.status(400).json({
+        success: false,
+        message: "Slot not available",
+      });
+    }
+
+    const userData = await userModel.findById(userId).select("-password");
+
+    const appointmentData = {
+      userId,
+      doctorId: docId,
+      slotDate,
+      slotTime,
+      userData,
+      docData: {
+        _id: docData._id,
+        name: docData.name,
+        speciality: docData.speciality,
+        image: docData.image,
+        fee: docData.fee,
+      },
+      amount: docData.fee,
+      date: Date.now(),
+    };
+
+    // Create appointment
+    const newAppointment = new appointementModel(appointmentData);
+    await newAppointment.save();
+
+    // Update doctor's booked slots
+    if (!slot_booked[slotDate]) {
+      slot_booked[slotDate] = [];
+    }
+    slot_booked[slotDate].push(slotTime);
+
+    await doctorModel.findByIdAndUpdate(docId, {
+      slots_booked: slot_booked,
+    });
+
+    res.json({
+      success: true,
+      message: "Appointment booked successfully",
+    });
+  } catch (error) {
+    console.error("Booking error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error during booking",
+    });
+  }
+};
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment };
