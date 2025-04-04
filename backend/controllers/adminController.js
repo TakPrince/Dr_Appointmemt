@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
 import jwt from "jsonwebtoken";
+import appointmentModel from "../models/appointementModel.js";
+import userModel from "../models/userModel.js";
 // API for adding doctor
 
 const addDoctor = async (req, res) => {
@@ -114,4 +116,81 @@ const allDoctor = async (req, res) => {
   }
 };
 
-export { addDoctor, loginAdmin, allDoctor };
+// api to get all appointment
+const appointmentAdmin = async (req, res) => {
+  try {
+    const appointments = await appointmentModel.find({});
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error" });
+  }
+};
+
+// api for appointment cancel
+const appointmentCancel = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+
+    // 1. Find and update the appointment
+    const appointment = await appointmentModel.findByIdAndUpdate(
+      appointmentId,
+      { cancelled: true },
+      { new: true }
+    );
+
+    // 2. Update doctor's slots_booked
+    const { docId, slotDate, slotTime } = appointment;
+    await doctorModel.findByIdAndUpdate(docId, {
+      $pull: {
+        [`slots_booked.${slotDate}`]: slotTime,
+      },
+    });
+
+    res.json({
+      success: true,
+      message: "Appointment cancelled successfully",
+    });
+  } catch (error) {
+    console.error("Cancellation error:", error);
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// api to get dashboard data from admin panel
+
+const dashboardData = async (req, res) => {
+  try {
+    const doctors = await doctorModel.find({});
+    const users = await userModel.find({});
+    const appointments = await appointmentModel.find({});
+
+    const dashData = {
+      doctors: doctors.length,
+      patients: users.length,
+      appointments: appointments.length,
+      latestAppointment: appointments.reverse().slice(0, 5),
+    };
+    res.json({
+      success: true,
+      dashData,
+    });
+  } catch (error) {
+    console.error("Cancellation error:", error);
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+export {
+  addDoctor,
+  loginAdmin,
+  allDoctor,
+  appointmentAdmin,
+  appointmentCancel,
+  dashboardData,
+};
