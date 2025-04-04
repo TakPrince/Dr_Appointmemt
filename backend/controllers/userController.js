@@ -252,6 +252,10 @@ const bookAppointment = async (req, res) => {
         speciality: docData.speciality,
         image: docData.image,
         fee: docData.fee,
+        address: {
+          line1: docData.address.line1 || "",
+          line2: docData.address.line2 || "",
+        },
       },
       amount: docData.fee,
       date: Date.now(),
@@ -277,11 +281,83 @@ const bookAppointment = async (req, res) => {
     });
   } catch (error) {
     console.error("Booking error:", error);
-    res.status(500).json({
+    res.json({
       success: false,
-      message: "Server error during booking",
+      message: error.message,
     });
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment };
+//api to get user appointement
+
+const listAppointment = async (req, res) => {
+  try {
+    const userId = req.user.id; // Changed from req.body to use the authenticated user
+    const appointments = await appointementModel.find({ userId });
+
+    res.json({
+      success: true,
+      appointments,
+    });
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// api to cencel appointment
+const cancelAppointment = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const userId = req.user.id;
+
+    // 1. Find the appointment and verify ownership
+    const appointment = await appointementModel.findOneAndUpdate(
+      {
+        _id: appointmentId,
+        userId,
+        cancelled: false, // Only uncancelled appointments
+      },
+      { cancelled: true },
+      { new: true }
+    );
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found or already cancelled",
+      });
+    }
+
+    // 2. Free up the doctor's slot
+    await doctorModel.findByIdAndUpdate(appointment.doctorId, {
+      $pull: {
+        [`slots_booked.${appointment.slotDate}`]: appointment.slotTime,
+      },
+    });
+
+    res.json({
+      success: true,
+      message: "Appointment cancelled successfully",
+    });
+  } catch (error) {
+    console.error("Cancellation error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export {
+  registerUser,
+  loginUser,
+  getProfile,
+  updateProfile,
+  bookAppointment,
+  listAppointment,
+  cancelAppointment,
+};
