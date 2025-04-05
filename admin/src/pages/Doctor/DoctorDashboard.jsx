@@ -9,7 +9,7 @@ const DoctorDashboard = () => {
     const { getDashData, dashData, setDashData, dToken } = useContext(DoctorContext)
 
 
-    const { courrency, slotDateFormate, completeAppointment, cancelAppointment } = useContext(AppContext)
+    const { courrency, slotDateFormate, } = useContext(AppContext)
 
     useEffect(() => {
 
@@ -73,8 +73,9 @@ const DoctorDashboard = () => {
                                     : item.isCompleted
                                         ? <p className='text-green-500 text-xs font-medium'>Complited</p>
                                         : <div className='flex'>
-                                            <img onClick={() => cancelAppointment(item._id)} className='w-8 cursor-pointer' src={assets.cancel_icon} alt="" />
-                                            <img onClick={() => completeAppointment(item._id)} className='w-8 cursor-pointer' src={assets.tick_icon} alt="" />
+                                            {/* <img onClick={() => cancelAppointment(item._id)} className='w-8 cursor-pointer' src={assets.cancel_icon} alt="" />
+                                            <img onClick={() => completeAppointment(item._id)} className='w-8 cursor-pointer' src={assets.tick_icon} alt="" /> */}
+                                            <p className='text-gray-400 text-xs font-medium'>Up Coming</p>
 
                                         </div>
 
