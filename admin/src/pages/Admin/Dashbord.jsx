@@ -63,20 +63,10 @@ const Dashbord = () => {
                             </div>
 
 
-                            {item.cancelled ? (
-                                <span className='text-red-500 text-sm font-medium'>Cancelled</span>
-                            ) : (
-                                <button
-                                    onClick={() =>
-                                        cancelAppointment(item._id)
-
-
-                                    }
-                                    className=' p-2 text-red-500 hover:bg-red-50 rounded-full'
-                                >
-                                    <img className='w-10' src={assets.cancel_icon} alt="Cancel" />
-                                </button>
-                            )}
+                            {
+                                item.cancelled ? <p className='text-red-400 text-xs font-medium'> Cancelled </p  > : item.isCompleted ? <p className='text-green-500 text-xs font-medium'>Completed</p> :
+                                    <img onClick={() => cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />
+                            }
                         </div>
                     ))}
                 </div>
