@@ -132,20 +132,45 @@ const appointmentCancel = async (req, res) => {
   try {
     const { appointmentId } = req.body;
 
-    // 1. Find and update the appointment
-    const appointment = await appointmentModel.findByIdAndUpdate(
-      appointmentId,
-      { cancelled: true },
-      { new: true }
-    );
+    // 1. Find the appointment first to verify it exists
+    const appointment = await appointmentModel.findById(appointmentId);
 
-    // 2. Update doctor's slots_booked
-    const { docId, slotDate, slotTime } = appointment;
-    await doctorModel.findByIdAndUpdate(docId, {
-      $pull: {
-        [`slots_booked.${slotDate}`]: slotTime,
-      },
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    // Check if already cancelled
+    if (appointment.cancelled) {
+      return res.status(400).json({
+        success: false,
+        message: "Appointment already cancelled",
+      });
+    }
+
+    // Check if already completed
+    if (appointment.isCompleted) {
+      return res.status(400).json({
+        success: false,
+        message: "Completed appointments cannot be cancelled",
+      });
+    }
+
+    // 2. Update the appointment status
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
     });
+
+    // 3. Free up the doctor's slot if not already completed/cancelled
+    if (appointment.doctorId && appointment.slotDate && appointment.slotTime) {
+      await doctorModel.findByIdAndUpdate(appointment.doctorId, {
+        $pull: {
+          [`slots_booked.${appointment.slotDate}`]: appointment.slotTime,
+        },
+      });
+    }
 
     res.json({
       success: true,
@@ -153,7 +178,7 @@ const appointmentCancel = async (req, res) => {
     });
   } catch (error) {
     console.error("Cancellation error:", error);
-    res.json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
