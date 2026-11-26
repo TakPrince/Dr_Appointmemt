@@ -30,8 +30,7 @@ const MyApponitment = () => {
 
             const { data } = await axios.post(backendUrl + '/api/user/update-profile', formData, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data'
+                    'Authorization': `Bearer ${token}`
                 }
             })
 
@@ -158,7 +157,7 @@ const MyApponitment = () => {
                                 className='max-w-28 bg-gray-100'
                                 type="date"
                                 name="dob"
-                                value={editData.dob || ''}
+                                value={editData.dob && editData.dob !== 'Not Selected' ? editData.dob : ''}
                                 onChange={handleInputChange}
                             />
                             : <p className='text-gray-400'>{userData.dob}</p>
