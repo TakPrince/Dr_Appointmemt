@@ -188,7 +188,7 @@ const Appointment = () => {
                             <div
                                 key={index}
                                 className={`text-center py-6 min-w-16 rounded-full cursor-pointer 
-                        ${slotIndex === index ? 'bg-blue-600 text-white' : 'border border-gray-400 text-gray-700'}`}
+                        ${slotIndex === index ? 'bg-orange-600 text-white' : 'border border-gray-400 text-gray-700'}`}
                                 onClick={() => setSlotIndex(index)}>
                                 <p className="text-sm font-medium">{daySlots[0] && dayOfWeek[daySlots[0].datetime.getDay()]}</p>
                                 <p className="text-lg font-semibold">{daySlots[0] && daySlots[0].datetime.getDate()}</p>

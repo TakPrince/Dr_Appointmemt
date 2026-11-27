@@ -17,8 +17,8 @@ const DoctorList = () => {
                 <div className='w-full flex flex-wrap gap-4 pt-5 gap-y-6'>
                     {doctors && doctors.length > 0 ? (
                         doctors.map((doctor) => (
-                            <div className='border border-indigo-200 rounded-xl max-w-56 overflow-hidden cursor-pointer group' key={doctor._id}>
-                                <img className='bg-indigo-50 group-hover:bg-primary transition-all duration-500' src={doctor.image} alt={doctor.name} />
+                            <div className='border border-orange-200 rounded-xl max-w-56 overflow-hidden cursor-pointer group' key={doctor._id}>
+                                <img className='bg-orange-50 group-hover:bg-primary transition-all duration-500' src={doctor.image} alt={doctor.name} />
                                 <div className='p-4'>
                                     <p className='text-neutral-800 text-lg font-medium'>{doctor.name}</p>
                                     <p className='text-zinc-600 text-sm'>{doctor.speciality}</p>

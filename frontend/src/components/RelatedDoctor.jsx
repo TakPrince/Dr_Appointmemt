@@ -29,9 +29,9 @@ const RelatedDoctor = ({ speciality, docId }) => {
                     <div
                         key={index}
                         onClick={() => { navigate(`/appointment/${item._id}`); scrollTo(0, 0); }}
-                        className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-500"
+                        className="border border-orange-200 rounded-xl overflow-hidden cursor-pointer hover:-translate-y-2 transition-all duration-500"
                     >
-                        <img className="bg-blue-50" src={item.image} alt="" />
+                        <img className="bg-orange-50" src={item.image} alt="" />
                         <div className="p-4">
 
                             <div className={`flex items-center gap-2 text-sm ${item.available ? 'text-green-500' : 'text-gray-500'}text-green-500 text-center`}>
@@ -50,7 +50,7 @@ const RelatedDoctor = ({ speciality, docId }) => {
                     navigate('/doctors');
                     scrollTo(0, 0);
                 }}
-                className="bg-blue-50 text-gray-600 px-12 py-3 rounded-full mt-10"
+                className="bg-orange-50 text-gray-600 px-12 py-3 rounded-full mt-10"
             >
                 More
             </button>
