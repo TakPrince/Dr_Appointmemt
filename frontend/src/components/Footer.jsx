@@ -10,7 +10,7 @@ const Footer = () => {
                 <div>
                     <img className='mb-5 w-40' src={assets.logo} alt="Logo" />
                     <p className='w-full md:w-2/3 text-gray-600 leading-6'>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                        We have 21 doctors listed in Orange Hospital with comprehensive information about the doctor including qualification, experience, education, procedures and conditions treated, expertise and more. You can search Orange Hospital doctors list by name or speciality.
                     </p>
                 </div>
 
@@ -29,8 +29,10 @@ const Footer = () => {
                 <div>
                     <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
                     <ul className='flex flex-col gap-2 text-gray-600'>
-                        <li>📞 +91 1234567890</li>
-                        <li>📩 getprincedev@gmail.com</li>
+                        <li>🏢  Thakor Wadi Street,<br /> Beside H.P. Petrol Pump,<br /> Station Road, <br />Navsari - 396445 </li>
+                        <li>📩 drbbh@yahoo.in</li>
+                        <li>📞 (02637) 245500 / 242200 </li>
+                        <li>📞  +91 63549 10363 </li>
                     </ul>
                 </div>
             </div>
