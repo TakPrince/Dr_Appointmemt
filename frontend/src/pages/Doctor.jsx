@@ -39,39 +39,39 @@ const Doctor = () => {
                         All Specialities
                     </p>
                     <p
-                        onClick={() => navigate(speciality === 'General physician' ? `/doctors` : `/doctors/General physician`)}
-                        className={`w-[94wv] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "General physician" ? "bg-orange-100 text-black" : ""}`}>
-                        General Physician
+                        onClick={() => navigate(speciality === 'Cardiology' ? `/doctors` : `/doctors/Cardiology`)}
+                        className={`w-[94wv] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Cardiology" ? "bg-orange-100 text-black" : ""}`}>
+                        Cardiology
                     </p>
 
                     <p
-                        onClick={() => navigate(speciality === 'Gynecologist' ? `/doctors` : `/doctors/Gynecologist`)}
-                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Gynecologist" ? "bg-orange-100 text-black" : ""}`}>
-                        Gynecologist
+                        onClick={() => navigate(speciality === 'Neurology' ? `/doctors` : `/doctors/Neurology`)}
+                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Neurology" ? "bg-orange-100 text-black" : ""}`}>
+                        Neurology
                     </p>
 
                     <p
-                        onClick={() => navigate(speciality === 'Dermatologist' ? `/doctors` : `/doctors/Dermatologist`)}
-                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Dermatologist" ? "bg-orange-100 text-black" : ""}`}>
-                        Dermatologist
+                        onClick={() => navigate(speciality === 'Neurosurgery' ? `/doctors` : `/doctors/Neurosurgery`)}
+                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Neurosurgery" ? "bg-orange-100 text-black" : ""}`}>
+                        Neurosurgery
                     </p>
 
                     <p
-                        onClick={() => navigate(speciality === 'Pediatricians' ? `/doctors` : `/doctors/Pediatricians`)}
-                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Pediatricians" ? "bg-orange-100 text-black" : ""}`}>
-                        Pediatricians
+                        onClick={() => navigate(speciality === 'Orthopedics' ? `/doctors` : `/doctors/Orthopedics`)}
+                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Orthopedics" ? "bg-orange-100 text-black" : ""}`}>
+                        Orthopedics
                     </p>
 
                     <p
-                        onClick={() => navigate(speciality === 'Neurologist' ? `/doctors` : `/doctors/Neurologist`)}
-                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Neurologist" ? "bg-orange-100 text-black" : ""}`}>
-                        Neurologist
+                        onClick={() => navigate(speciality === 'General Surgery' ? `/doctors` : `/doctors/General Surgery`)}
+                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "General Surgery" ? "bg-orange-100 text-black" : ""}`}>
+                        General Surgery
                     </p>
 
                     <p
-                        onClick={() => navigate(speciality === 'Gastroenterologist' ? `/doctors` : `/doctors/Gastroenterologist`)}
-                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Gastroenterologist" ? "bg-orange-100 text-black" : ""}`}>
-                        Gastroenterologist
+                        onClick={() => navigate(speciality === 'Anesthesiology' ? `/doctors` : `/doctors/Anesthesiology`)}
+                        className={`w-[94w] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Anesthesiology" ? "bg-orange-100 text-black" : ""}`}>
+                        Anesthesiology
                     </p>
                 </div>
 

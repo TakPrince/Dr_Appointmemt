@@ -7,7 +7,7 @@ import axios from 'axios'
 const AddDoctor = () => {
     const [docImg, setDocImg] = useState(false)
     const [name, setName] = useState('')
-    const [speciality, setSpeciality] = useState('General physician')
+    const [speciality, setSpeciality] = useState('Cardiology')
     const [email, setEmail] = useState('')
     const [address1, setAddress1] = useState('')
     const [address2, setAddress2] = useState('')
@@ -91,7 +91,7 @@ const AddDoctor = () => {
                 setAddress1('')
                 setAddress2('')
                 setDocImg(false)
-                setSpeciality('General physician')
+                setSpeciality('Cardiology')
             } else {
                 toast.error(response.data.message || 'Failed to add doctor')
             }
@@ -214,12 +214,12 @@ const AddDoctor = () => {
                                 className='border rounded px-3 py-2'
                                 required
                             >
-                                <option value="General physician">General physician</option>
-                                <option value="Gynecologist">Gynecologist</option>
-                                <option value="Dermatologist">Dermatologist</option>
-                                <option value="Pediatricians">Pediatricians</option>
-                                <option value="Neurologist">Neurologist</option>
-                                <option value="Gastroenterologist">Gastroenterologist</option>
+                                <option value="Cardiology">Cardiology</option>
+                                <option value="Neurology">Neurology</option>
+                                <option value="Neurosurgery">Neurosurgery</option>
+                                <option value="Orthopedics">Orthopedics</option>
+                                <option value="General Surgery">General Surgery</option>
+                                <option value="Anesthesiology">Anesthesiology</option>
                             </select>
                         </div>
 
